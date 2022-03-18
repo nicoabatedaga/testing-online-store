@@ -31,4 +31,5 @@ You only have to login with your GitHub account and it will be ready to use.
 <img src="images/configure.png" width=400 />
 </div>
 
-And done! Your initial configuration is complete. 
+
+### And done! Your initial configuration is complete. 

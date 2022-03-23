@@ -1,5 +1,6 @@
 'use strict';
 
+const sdk = require('api')('@docs-dlocal/v2.1#3hz4uc1tl09mpmx4');
 const express = require('express');
 const router = express.Router();
 const validator = require('validator');
@@ -221,7 +222,51 @@ router.post('/login', (req, res, next) => {
 });
 
 router.post('/generate_payment', (req, res, next) => {
-
+    var ts = new Date()
+    //Signature: <hmac(secretKey, "X-Login+X-Date+RequestBody")>
+    var rqb = {
+        payer: {
+            name: 'Thiago Gabriel',
+            email: 'thiago@example.com',
+            document: '53033315550',
+            user_reference: '12345',
+            address: {
+                state: 'Rio de Janeiro',
+                city: 'Volta Redonda',
+                zip_code: '27275-595',
+                street: 'Servidao B-1',
+                number: '1106'
+            }
+        },
+        card: {
+            installments: '1',
+            capture: true,
+            save: true,
+            holder_name: 'Thiago Gabriel',
+            number: '4111111111111111',
+            cvv: '123',
+            expiration_month: 10,
+            expiration_year: 2040
+        },
+        amount: 120,
+        currency: 'USD',
+        country: 'BR',
+        payment_method_id: 'VD',
+        payment_method_flow: 'DIRECT',
+        order_id: '657434343',
+        notification_url: 'http://merchant.com/notifications'
+    }
+    var hash = crypto.createHmac('sha1', '3u7oMIFRoKCjGJfGTvaElJHWomp2S5jtj').update("1KzPFoQJaI2022-03-23T13:46:28.629Z"+rqb).digest().toString('base64')
+    sdk['create-payment'](rqb, {
+        'X-Date': ts,
+        'X-Login': '1KzPFoQJaI',
+        'X-Trans-Key': 'JqnkIujx9Z',
+        'X-Version': '2.1',
+        'User-Agent': 'MerchantTest / 1.0',
+        Authorization: hash
+    })
+        .then(res => console.log("OK"+res))
+        .catch(err => console.error("FAIL"+err));
 });
 
 router.post('/register', (req, res, next) => {

@@ -223,6 +223,7 @@ router.post('/login', (req, res, next) => {
 
 router.post('/generate_payment', (req, res, next) => {
     var ts = new Date()
+    console.log("timestamp:"+ts)
     //Signature: <hmac(secretKey, "X-Login+X-Date+RequestBody")>
     var rqb = {
         payer: {
@@ -256,7 +257,10 @@ router.post('/generate_payment', (req, res, next) => {
         order_id: '657434343',
         notification_url: 'http://merchant.com/notifications'
     }
+    console.log("body to post:"+rqb)
     var hash = crypto.createHmac('sha1', '3u7oMIFRoKCjGJfGTvaElJHWomp2S5jtj').update("1KzPFoQJaI2022-03-23T13:46:28.629Z"+rqb).digest().toString('base64')
+    console.log("hash authorization:"+hash)
+
     sdk['create-payment'](rqb, {
         'X-Date': ts,
         'X-Login': '1KzPFoQJaI',

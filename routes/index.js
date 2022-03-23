@@ -15,6 +15,21 @@ router.get('/checkout', (req, res, next) => {
     });
 });
 
+router.get('/callback', (req, res, next) => {
+    console.log("Llego el callback de dlocal")
+    console.log(req)
+});
+
+router.get('/payin_notification', (req, res, next) => {
+    console.log("Llego la notificacion depayin de dlocal")
+    console.log(req)
+});
+
+router.get('/refunds_notification', (req, res, next) => {
+    console.log("Llego la notificacion depayin de dlocal")
+    console.log(req)
+});
+
 router.get('/billing-shipping', (req, res, next) => {
     if(req.session.user) {
         res.render('billing-shipping', {

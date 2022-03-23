@@ -220,6 +220,10 @@ router.post('/login', (req, res, next) => {
     }
 });
 
+router.post('/generate_payment', (req, res, next) => {
+
+});
+
 router.post('/register', (req, res, next) => {
     const { name, email, password } = req.body;
     const errors = [];
